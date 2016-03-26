@@ -145,7 +145,7 @@ Nicholas McCready - https://twitter.com/nmccready
       transport: 'https',
       isGoogleMapsForWork: false,
       china: false,
-      v: '3',
+      v: '3.24',
       libraries: '',
       language: 'en',
       preventLoad: false

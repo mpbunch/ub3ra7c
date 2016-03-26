@@ -6,19 +6,21 @@
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css"/>
   <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="stylesheet" type="text/css" href="css/map.css"/>
 </head>
 <body ng-controller="mainController">
   <ng-view></ng-view>
   
-  <script src="bower_components/angular/angular.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+<!--  <script src="bower_components/angular/angular.min.js"></script>-->
+  <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>  
   <script src="bower_components/lodash/dist/lodash.min.js"></script>
   <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
-  <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
-  <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-
+<!--  <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDB8Anfsgzn8fPF9Mv2w6yn3VlKkBgwE98"></script>-->
   <script src="js/app.js"></script>
 </body>
 </html>
