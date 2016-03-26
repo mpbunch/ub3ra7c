@@ -1,0 +1,14 @@
+mysqlimport --fields-terminated-by=, --verbose --local -u root udb /var/www/html/uber-tlc-foil-response/uber-trip-data/user.csv
+
+insert into user2 select * from user where user.id mod 2=0;
+delete from user where id mod 2=0;
+alter table user drop id;
+alter table user2 drop id;
+ALTER TABLE `user` ADD `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+ALTER TABLE `user2` ADD `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+update user a, user2 b set a.etime = b.stime, a.elat = b.slat, a.elon = b.slon where a.id = b.id;
+alter table user drop column id;
+
+
+tail -n +2 uber-raw-data-may14.csv
+sed --quiet -e 's/^/2014-/g' -e 's/\/2014//g' -e 's/\//-/g' uber-raw-data-may14.csv >> user.csv
