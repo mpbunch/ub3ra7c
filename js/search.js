@@ -1,6 +1,13 @@
 (function(window,ng){
   'use strict';
   ng.module("mapSearch", ['uiGmapgoogle-maps'])
+  .config(['uiGmapGoogleMapApiProvider',function(GoogleMapApi){
+    GoogleMapApi.configure({
+      key: 'AIzaSyDB8Anfsgzn8fPF9Mv2w6yn3VlKkBgwE98',
+      v: '3',
+      libraries: 'places'
+    });
+  }])
   .run(['$templateCache', function ($templateCache) {
     $templateCache.put('searchbox.tpl.html', '<input id="pac-input" class="pac-controls" type="text" placeholder="Search">');
     $templateCache.put('window.tpl.html', '<div ng-controller="WindowCtrl" ng-init="showPlaceDetails(parameter)">{{place.name}}</div>');
@@ -21,7 +28,7 @@
 
       $scope.map.bounds = {
         northeast:{
-          latitude:$scope.defaultBounds.getNorthEast().lat()+10,
+          latitude:$scope.defaultBounds.getNorthEast().lat(),
           longitude:$scope.defaultBounds.getNorthEast().lng()
         },
         southwest:{
@@ -39,36 +46,6 @@
         templateparameter:{},
         closeClick: function(){
           $scope.window.show = false;
-        }
-      },
-      map:{
-        control:{},
-        center:{
-          latitude: 40.74349,
-          longitude: -73.990822
-        },
-        zoom: 12,
-        polys: [],
-        draw: undefined,
-        options: {
-          disableDefaultUI: true
-        },
-        dragging: false,
-        bounds:{},
-        markers:[],
-        idkey: 'place_id',
-        events:{
-          idle: function(map){
-
-          },
-          dragend: function(map){
-            //update the search box bounds after dragging the map
-            var bounds = map.getBounds();
-            var ne = bounds.getNorthEast();
-            var sw = bounds.getSouthWest(); 
-            $scope.searchbox.options.bounds = new google.maps.LatLngBounds(sw, ne);
-            //$scope.searchbox.options.visible = true;
-          }
         }
       },
       searchbox:{

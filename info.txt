@@ -1,4 +1,7 @@
-mysqlimport --fields-terminated-by=, --verbose --local -u root udb /var/www/html/uber-tlc-foil-response/uber-trip-data/user.csv
+vi uber-raw-data-may14.csv /dd first line
+sed --quiet -e 's/"//g' -e s/^/2014-/g' -e 's/\/2014//g' -e 's/\//-/g' apr.csv >> user.csv
+
+mysqlimport --fields-terminated-by=, --verbose --local -u root udb /var/www/html/uber-trip-data/user.csv
 
 insert into user2 select * from user where user.id mod 2=0;
 delete from user where id mod 2=0;
@@ -9,6 +12,23 @@ ALTER TABLE `user2` ADD `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
 update user a, user2 b set a.etime = b.stime, a.elat = b.slat, a.elon = b.slon where a.id = b.id;
 alter table user drop column id;
 
-
-tail -n +2 uber-raw-data-may14.csv
-sed --quiet -e 's/^/2014-/g' -e 's/\/2014//g' -e 's/\//-/g' uber-raw-data-may14.csv >> user.csv
+SELECT * FROM user
+WHERE Contains(
+        GeomFromText(
+          'POLYGON(
+            (
+              40.721469550114584 -74.00806903839111,
+              40.71652555020213 -73.98532390594482,
+              40.705497806690765 -74.00613784790039,
+              40.70943417253246 -74.01678085327148,
+              40.721469550114584 -74.00806903839111
+            )
+          )'
+        ),
+        PointFromText(
+          CONCAT(
+            'POINT(',elat,' ',elon,')'
+          )
+        )
+      )
+    && etime between '2014-04-10' and '2014-04-11';

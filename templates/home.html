@@ -9,32 +9,16 @@
   <div class="row region" ng-controller="mapSearchCtrlr">
     <div class="col-xs-12" ng-controller="mapPolyCtrlr">
       <div id="searchBoxParent"></div>
-<!--
-      <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-        <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
-      </ui-gmap-google-map>
--->
-<!--
-      <ui-gmap-google-map
-                center="map.center"
-                zoom="map.zoom"
-                dragging="map.dragging"
-                bounds="map.bounds"
-                events="map.events"
-                options="map.options"
-                pan="true"
-                control="map.control"
-                >
--->
-      <ui-gmap-google-map id="map"
-         center="map.center"
-         pan="map.pan"
-         zoom="map.zoom"
-         draggable="true"
-         refresh="map.refresh"
-         options="map.options"
-         events="map.events"
-         bounds="map.bounds">
+        <ui-gmap-google-map id="map"
+           center="map.center"
+           pan="map.pan"
+           zoom="map.zoom"
+           draggable="map.dragging"
+           refresh="map.refresh"
+           options="map.options"
+           events="map.events"
+           bounds="map.bounds"
+           control="map.control">
             <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
             <!--to add to a parent div-->
             <!--<ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" parentdiv="searchbox.parentdiv"></ui-gmap-search-box>-->
