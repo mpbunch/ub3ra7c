@@ -62,24 +62,3 @@
   }])
   .controller('projectController',[function(){}])
 })();
-
-SELECT * FROM user
-WHERE Contains(
-        GeomFromText(
-          'POLYGON(
-            (
-              40.721469550114584 -74.00806903839111,
-              40.71652555020213 -73.98532390594482,
-              40.705497806690765 -74.00613784790039,
-              40.70943417253246 -74.01678085327148,
-              40.721469550114584 -74.00806903839111
-            )
-          )'
-        ),
-        PointFromText(
-          CONCAT(
-            'POINT(',elat,' ',elon,')'
-          )
-        )
-      )
-    && etime between '2014-04-10' and '2014-04-11';
