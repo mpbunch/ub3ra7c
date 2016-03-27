@@ -6,14 +6,15 @@
   </div>
 </div>
  <div class="container">
-  <div class="row region">
-    <div class="col-xs-12 col-md-6">
+  <div class="row region" ng-controller="mapSearchCtrlr">
+    <div class="col-xs-12" ng-controller="mapPolyCtrlr">
       <div id="searchBoxParent"></div>
 <!--
       <ui-gmap-google-map center='map.center' zoom='map.zoom'>
         <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
       </ui-gmap-google-map>
 -->
+<!--
       <ui-gmap-google-map
                 center="map.center"
                 zoom="map.zoom"
@@ -24,25 +25,30 @@
                 pan="true"
                 control="map.control"
                 >
+-->
+      <ui-gmap-google-map id="map"
+         center="map.center"
+         pan="map.pan"
+         zoom="map.zoom"
+         draggable="true"
+         refresh="map.refresh"
+         options="map.options"
+         events="map.events"
+         bounds="map.bounds">
             <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
             <!--to add to a parent div-->
             <!--<ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" parentdiv="searchbox.parentdiv"></ui-gmap-search-box>-->
             <ui-gmap-markers idkey="map.idkey" models="map.markers" coords="'self'" icon="'icon'" click="'onClicked'"></ui-gmap-markers>
             <ui-gmap-window show="window.show" coords="window.coords" idkey="window.place_id" templateurl="window.templateurl" templateparameter="window.templateparameter" options="window.options" closeClick='window.closeClick()' ng-cloak>
             </ui-gmap-window>
+            <ui-gmap-map-control template="draw.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+            <ui-gmap-map-control template="clear.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+
+            <ui-gmap-free-draw-polygons polygons="map.polys" draw="map.draw" ></ui-gmap-free-draw-polygons>
         </ui-gmap-google-map>
-    </div>
-    <div class="col-xs-12 col-md-6">
-      <label>Some Option</label>
-      <select class="form-control">
-        <option>--</option>
-      </select>
-      <label>Some Option</label>
-      <select class="form-control">
-        <option>--</option>
-      </select>
-      <label>Some Option</label>
-      <input type="text" class="form-control">
+        <ul>
+            <li ng-repeat="p in map.polys">{{p.getPath()}}</li>
+        </ul>
     </div>
   </div>
   <div class="row region">
