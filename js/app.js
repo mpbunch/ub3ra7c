@@ -11,6 +11,17 @@
     });   
   }])
   .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser', function($scope, $timeout, $log, $http, GoogleMapApi,uibDateParser){
+    
+    
+    $http.jsonp("https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod?callback=JSON_CALLBACK").
+    success(function(data){
+      $scope.data = data;
+    }).error(function(data){
+      $scope.data = 'No results found.';
+    });
+    
+    
+    
     $scope.today = function() {
       $scope.dt = new Date(2014, 3, 1);
     };
@@ -95,15 +106,7 @@
     
     $scope.sortType     = 'name'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
-    $scope.searchFish   = '';     // set the default search/filter term
-
-    // create the list of sushi rolls 
-    $scope.sushi = [
-      { name: 'Cali Roll', fish: 'Crab', tastiness: 2 },
-      { name: 'Philly', fish: 'Tuna', tastiness: 4 },
-      { name: 'Tiger', fish: 'Eel', tastiness: 7 },
-      { name: 'Rainbow', fish: 'Variety', tastiness: 6 }
-    ];
+    $scope.searchdata   = '';     // set the default search/filter term
 
     $scope.map = {
       control:{},

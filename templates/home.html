@@ -67,7 +67,7 @@
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Search da Fish" ng-model="searchFish">
+            <input type="text" class="form-control" placeholder="Search date or location" ng-model="searchData">
           </div>      
         </div>
       </form>
@@ -77,34 +77,58 @@
         <thead>
           <tr>
             <td>
-              <a ng-click="sortType = 'name'; sortReverse = !sortReverse">
-                Sushi Roll 
-                <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+              <a ng-click="sortType = 'stime'; sortReverse = !sortReverse">
+                Pickup Time 
+                <span ng-show="sortType == 'stime' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'stime' && sortReverse" class="fa fa-caret-up"></span>
               </a>
             </td>
             <td>
-              <a ng-click="sortType = 'fish'; sortReverse = !sortReverse">
-              Fish Type 
-                <span ng-show="sortType == 'fish' && !sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="sortType == 'fish' && sortReverse" class="fa fa-caret-up"></span>
+              <a ng-click="sortType = 'slat'; sortReverse = !sortReverse">
+              Pickup Lat
+                <span ng-show="sortType == 'slat' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'slat' && sortReverse" class="fa fa-caret-up"></span>
               </a>
             </td>
             <td>
-              <a ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
-              Taste Level 
-                <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-up"></span>
+              <a ng-click="sortType = 'slon'; sortReverse = !sortReverse">
+              Pickup Lon 
+                <span ng-show="sortType == 'slon' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'slon' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td>
+              <a ng-click="sortType = 'etime'; sortReverse = !sortReverse">
+                Dropoff Time 
+                <span ng-show="sortType == 'etime' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'etime' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td>
+              <a ng-click="sortType = 'elat'; sortReverse = !sortReverse">
+              Dropoff Lat
+                <span ng-show="sortType == 'elat' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'elat' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td>
+              <a ng-click="sortType = 'elon'; sortReverse = !sortReverse">
+              Dropoff Lon 
+                <span ng-show="sortType == 'elon' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'elon' && sortReverse" class="fa fa-caret-up"></span>
               </a>
             </td>
           </tr>
         </thead>
 
         <tbody>
-          <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
-            <td>{{ roll.name }}</td>
-            <td>{{ roll.fish }}</td>
-            <td>{{ roll.tastiness }}</td>
+          <tr ng-repeat="trip in data | orderBy:sortType:sortReverse | filter:searchData">
+            <td>{{ trip.stime }}</td>
+            <td>{{ trip.slat }}</td>
+            <td>{{ trip.slon }}</td>
+            <td>{{ trip.etime }}</td>
+            <td>{{ trip.elat }}</td>
+            <td>{{ trip.elon }}</td>
           </tr>
         </tbody>
 
@@ -112,3 +136,4 @@
     </div>
   </div>
 </div>
+{{data}}
