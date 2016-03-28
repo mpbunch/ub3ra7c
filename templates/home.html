@@ -7,7 +7,7 @@
 </div>
  <div class="container">
   <div class="row region" ng-controller="mapSearchCtrlr">
-    <div class="col-xs-12" ng-controller="mapPolyCtrlr">
+    <div class="col-xs-12 col-sm-9" ng-controller="mapPolyCtrlr">
       <div id="searchBoxParent"></div>
         <ui-gmap-google-map id="map"
            center="map.center"
@@ -34,7 +34,27 @@
             <li ng-repeat="p in map.polys">{{p.getPath()}}</li>
         </ul>
     </div>
+    <div class="col-xs-12 col-sm-3">
+      <label>Start Date</label>
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" show-button-bar="false"/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+      <label>End Date</label>
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" show-button-bar="false"/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+      <label>Custom Constraints</label>
+      <br/>
+      <input type="checkbox"/> Drop off must be within pick up geofence.
+    </div>
   </div>
+  
   <div class="row region">
     <div class="col-xs-12">
       <div class="alert alert-info">

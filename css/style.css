@@ -4,3 +4,7 @@ select{
   margin-bottom:15px
 }
 .region{padding:30px 0}
+
+.uib-datepicker-popup *:focus {
+  outline: none !important;
+}

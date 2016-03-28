@@ -140,7 +140,7 @@ html, body {
 .angular-google-map img {
     max-width: inherit;
 }
-button.btn {
+#map button.btn {
   padding: 8px 10px;
   font-size: 14px;
   margin-top: 10px;

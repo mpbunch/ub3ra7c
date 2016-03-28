@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  angular.module('atcMap',['ngRoute','uiGmapgoogle-maps','mapPoly','mapSearch'])
+  angular.module('atcMap',['ui.bootstrap','ngRoute','uiGmapgoogle-maps','mapPoly','mapSearch'])
   .config(['$routeProvider',function($routeProvider){
     $routeProvider.when('/',{
       templateUrl:'templates/home.html',
@@ -10,7 +10,89 @@
       controller:'projectController'
     });   
   }])
-  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi', function($scope, $timeout, $log, $http, GoogleMapApi){
+  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser', function($scope, $timeout, $log, $http, GoogleMapApi,uibDateParser){
+    $scope.today = function() {
+      $scope.dt = new Date(2014, 3, 1);
+    };
+    $scope.today();
+
+    $scope.clear = function() {
+      $scope.dt = '2014-04-01';
+    };
+
+    $scope.inlineOptions = {
+      customClass: getDayClass,
+      minDate: new Date(2014, 3, 1),
+      showWeeks: false
+    };
+
+    $scope.dateOptions = {
+      dateDisabled: false,
+      formatYear: 'yy',
+      maxDate: new Date(2014, 8, 30),
+      minDate: new Date(2014, 3, 1),
+      startingDay: 0,
+      showWeeks:false
+    };
+
+    // Disable weekend selection
+    function disabled(data) {
+      var date = data.date,
+        mode = data.mode;
+      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    }
+
+    $scope.toggleMin = function() {
+      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleMin();
+
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
+    };
+
+    $scope.open2 = function() {
+      $scope.popup2.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dt = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+      opened: false
+    };
+
+    $scope.popup2 = {
+      opened: false
+    };
+
+    
+
+    function getDayClass(data) {
+      var date = data.date,
+        mode = data.mode;
+      if (mode === 'day') {
+        var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+        for (var i = 0; i < $scope.events.length; i++) {
+          var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+          if (dayToCheck === currentDay) {
+            return $scope.events[i].status;
+          }
+        }
+      }
+
+      return '';
+    }
+    
     $scope.sortType     = 'name'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
     $scope.searchFish   = '';     // set the default search/filter term
