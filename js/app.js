@@ -110,8 +110,10 @@
     };
     
     $scope.updateMap = function(){
-      $scope.showem = $scope.filteredData;
-    }
+      setTimeout(function(){
+        $scope.showem = $scope.filteredData;
+      },10);
+    };
     $scope.showem = [];    
 
     function getDayClass(data) {
