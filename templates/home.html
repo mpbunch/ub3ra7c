@@ -25,10 +25,21 @@
             <ui-gmap-markers idkey="map.idkey" models="map.markers" coords="'self'" icon="'icon'" click="'onClicked'"></ui-gmap-markers>
             <ui-gmap-window show="window.show" coords="window.coords" idkey="window.place_id" templateurl="window.templateurl" templateparameter="window.templateparameter" options="window.options" closeClick='window.closeClick()' ng-cloak>
             </ui-gmap-window>
+            
+            <ui-gmap-map-control template="circle.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
             <ui-gmap-map-control template="draw.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
             <ui-gmap-map-control template="clear.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
 
-            <ui-gmap-free-draw-polygons polygons="map.polys" draw="map.draw" ></ui-gmap-free-draw-polygons>
+<!--            <ui-gmap-free-draw-polygons polygons="map.polys" draw="map.draw" ></ui-gmap-free-draw-polygons>-->
+            <ui-gmap-circle ng-repeat="c in map.circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius"
+                events="c.events" visigble="c.visible" geodesic="c.geodesic"
+                editable="c.editable" draggable="c.draggable" clickable="c.clickable">
+            </ui-gmap-circle>
+            
+            <ui-gmap-polygon ng-repeat="p in map.polygons track by p.id" path="p.path" stroke="p.stroke" visible="p.visible"
+                geodesic="p.geodesic" fill="p.fill" fit="false" editable="p.editable" draggable="p.draggable" events="map.polygonEvents">
+            </ui-gmap-polygon>
+            
         </ui-gmap-google-map>
         <ul>
             <li ng-repeat="p in map.polys">{{p.getPath()}}</li>
@@ -52,6 +63,7 @@
       <label>Custom Constraints</label>
       <br/>
       <input type="checkbox"/> Drop off must be within pick up geofence.
+      <input type="submit" value="Search" class="form-control btn btn-primary margin-top-30" ng-click="runQuery()"/>
     </div>
   </div>
   

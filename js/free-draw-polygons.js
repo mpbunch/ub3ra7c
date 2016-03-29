@@ -15,41 +15,88 @@
       return this;
     };
   })
-  .service('drawChannel',['channel',function(channel){
-    return new channel()
-  }])
-  .service('clearChannel',['channel',function(channel){
-    return new channel()
-  }])
-  .controller('mapWidgetCtrl', ['$scope', 'drawChannel','clearChannel', function ($scope, drawChannel, clearChannel) {
+
+  .controller('mapWidgetCtrl', ['$scope','$rootScope', function ($scope,$rootScope) {
+    
     $scope.drawWidget = {
-      controlText: 'draw',
+      controlText: 'poly',
       controlClick: function () {
-        drawChannel.invoke()
-        console.log($scope.map)
+        $rootScope.map.circles = [];
+        $rootScope.map.polygons = [{
+          id: 1,
+          path: [
+            {
+              latitude: 40.76,
+            longitude: -73.999
+            },
+            {
+              latitude: 40.71,
+            longitude: -74.012
+            },
+            {
+              latitude: 40.749,
+            longitude: -73.970
+            }
+          ],
+          stroke: {
+            color: '#33CDDC',
+            weight: 3
+          },
+          editable: true,
+          draggable: true,
+          geodesic: false,
+          visible: true,
+          fill: {
+            color: '#33CCCC',
+            opacity: 0.8
+          }
+        }];
+      }
+    };
+    $scope.cricleWidget = {
+      controlText: 'circle',
+      controlClick: function (){
+        $rootScope.map.polygons = [];
+        $rootScope.map.circles = [
+          {
+            id: 1,
+            center: {
+              latitude: 40.74349,
+              longitude: -73.990822
+            },
+            radius: 1500,
+            stroke: {
+              color: '#08B21F',
+              weight: 2,
+              opacity: 1
+            },
+            fill: {
+              color: '#08B21F',
+              opacity: 0.5
+            },
+            geodesic: true,
+            draggable: true,
+            editable: true,
+            visible: true,
+          }
+        ];
       }
     };
     $scope.clearWidget = {
       controlText: 'clear',
       controlClick: function () {
-        clearChannel.invoke()
+        $rootScope.map.circles = [];
+        $rootScope.map.polygons = [];
       }
     };
   }])
-  .controller('mapPolyCtrlr', ['$rootScope', '$scope',"uiGmapLogger", 'drawChannel','clearChannel',function ($rootScope, $scope, $log,drawChannel, clearChannel) {
-    var clear = function(){
-      $scope.map.polys = [];
-    };
-    var draw = function(){
-      $scope.map.draw();//should be defined by now
-    };
-    //add beginDraw as a subscriber to be invoked by the channel, allows controller to controller coms
-    drawChannel.add(draw);
-    clearChannel.add(clear);
+  .controller('mapPolyCtrlr', [function () {
+    
   }])
   .run(['$templateCache','uiGmapLogger', function ($templateCache,Logger) {
     Logger.doLog = true;
     $templateCache.put('draw.tpl.html', '<button class="btn btn-lg btn-primary"  ng-click="drawWidget.controlClick()">{{drawWidget.controlText}}</button>');
     $templateCache.put('clear.tpl.html', '<button class="btn btn-lg btn-primary"  ng-click="clearWidget.controlClick()">{{clearWidget.controlText}}</button>');
+    $templateCache.put('circle.tpl.html', '<button class="btn btn-lg btn-primary"  ng-click="cricleWidget.controlClick()">{{cricleWidget.controlText}}</button>')
   }]);
 })(window, angular);

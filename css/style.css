@@ -8,3 +8,5 @@ select{
 .uib-datepicker-popup *:focus {
   outline: none !important;
 }
+.margin-top-15{margin-top:15px}
+.margin-top-30{margin-top:30px}

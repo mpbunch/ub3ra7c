@@ -10,15 +10,36 @@
       controller:'projectController'
     });   
   }])
-  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser', function($scope, $timeout, $log, $http, GoogleMapApi,uibDateParser){
+  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser','$rootScope', function($scope, $timeout, $log, $http, GoogleMapApi,uibDateParser,$rootScope){
+    $scope.runQuery = function(){                                         //on submit button click
+      if($scope.map.polygons[0]){                                         //validate polygon is being used
+        var poly = $rootScope.map.polygons[0];                            
+        var c = '';                                                       //create cords var
+        for(var i=0;i<poly.path.length;++i){                              //iterate over each lat,lon pair
+          c += poly.path[i].latitude+' '+poly.path[i].longitude+',';      //save to string
+        }
+        c += poly.path[0].latitude+' '+poly.path[0].longitude;            //add first element to end of string to close polygon
+        $scope.getData(c);                                                //get data based on the polygon bounds
+      }
+      if($scope.map.circles[0]){                                          //validate circle is being used
+        var circ = $rootScope.map.circles[0];                             
+        console.log(circ.center,circ.radius);                             
+      }
+    };
     
-    
-    $http.jsonp("https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod?callback=JSON_CALLBACK").
-    success(function(data){
-      $scope.data = data;
-    }).error(function(data){
-      $scope.data = 'No results found.';
-    });
+    $scope.getData = function(cords){
+      console.log(cords);
+      var url = 'https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod?callback=JSON_CALLBACK';
+      var url = 'https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod';
+      $http({
+        method: 'POST',
+        url: url,
+        data: cords
+      }).then(function successCallback(response) {
+        $scope.data = response.data;
+      });
+    };
+
     
     
     
@@ -106,9 +127,9 @@
     
     $scope.sortType     = 'name'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
-    $scope.searchdata   = '';     // set the default search/filter term
+    $scope.searchData   = '';     // set the default search/filter term
 
-    $scope.map = {
+    $rootScope.map = {
       control:{},
       center:{
         latitude: 40.74349,
@@ -142,7 +163,7 @@
           //$scope.searchbox.options.visible = true;
         }
       },
-      bounds: {},
+      bounds: {}      
     };
   }])
   .controller('projectController',[function(){}])
