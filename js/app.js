@@ -10,7 +10,10 @@
       controller:'projectController'
     });   
   }])
-  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser','$rootScope', function($scope, $timeout, $log, $http, GoogleMapApi,uibDateParser,$rootScope){
+  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser','$rootScope','$filter', function($scope, $timeout, $log, $http, GoogleMapApi,uibDateParser,$rootScope,$filter){
+    $scope.check = {
+      box:true
+    };
     $scope.runQuery = function(){                                         //on submit button click
       if($scope.map.polygons[0]){                                         //validate polygon is being used
         var poly = $rootScope.map.polygons[0];                            
@@ -19,7 +22,7 @@
           c += poly.path[i].latitude+' '+poly.path[i].longitude+',';      //save to string
         }
         c += poly.path[0].latitude+' '+poly.path[0].longitude;            //add first element to end of string to close polygon
-        $scope.getData(c);                                                //get data based on the polygon bounds
+        $scope.getData(c,$scope.check.box);                                            //get data based on the polygon bounds
       }
       if($scope.map.circles[0]){                                          //validate circle is being used
         var circ = $rootScope.map.circles[0];                             
@@ -27,14 +30,17 @@
       }
     };
     
-    $scope.getData = function(cords){
+    $scope.getData = function(cords,check){
+      var payload = [{c:cords,b:check}];
       var url = 'https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod';
       $http({
         method: 'POST',
         url: url,
-        data: cords
+        data: payload
       }).then(function successCallback(response) {
         $scope.data = response.data;
+        $scope.map.markers = response.data;
+        $scope.showem = response.data;
       });
     };
 
@@ -102,8 +108,11 @@
     $scope.popup2 = {
       opened: false
     };
-
     
+    $scope.updateMap = function(){
+      $scope.showem = $scope.filteredData;
+    }
+    $scope.showem = [];    
 
     function getDayClass(data) {
       var date = data.date,
@@ -148,19 +157,6 @@
       bounds:{},
       markers:[],
       idkey: 'place_id',
-      events:{
-        idle: function(map){
-
-        },
-        dragend: function(map){
-          //update the search box bounds after dragging the map
-          var bounds = map.getBounds();
-          var ne = bounds.getNorthEast();
-          var sw = bounds.getSouthWest(); 
-          $scope.searchbox.options.bounds = new google.maps.LatLngBounds(sw, ne);
-          //$scope.searchbox.options.visible = true;
-        }
-      },
       bounds: {}      
     };
   }])

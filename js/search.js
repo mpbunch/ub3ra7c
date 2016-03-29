@@ -5,7 +5,7 @@
     GoogleMapApi.configure({
       key: 'AIzaSyDB8Anfsgzn8fPF9Mv2w6yn3VlKkBgwE98',
       v: '3',
-      libraries: 'places'
+      libraries: 'places,geometry,visualization'
     });
   }])
   .run(['$templateCache', function ($templateCache) {

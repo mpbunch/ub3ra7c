@@ -1077,11 +1077,15 @@ Nicholas McCready - https://twitter.com/nmccready
         return _isTruthy(value, false, ['false', 'FALSE', 0, 'n', 'N', 'no', 'NO']);
       };
       getLatitude = function(value) {
+        console.log(value);
         if (Array.isArray(value) && value.length === 2) {
+          console.log('h');
           return value[1];
         } else if (angular.isDefined(value.type) && value.type === 'Point') {
+          console.log('s');
           return value.coordinates[1];
         } else {
+          console.log('f');
           return value.latitude;
         }
       };
@@ -1210,6 +1214,7 @@ Nicholas McCready - https://twitter.com/nmccready
         getCoords: getCoords,
         validateCoords: validateCoords,
         equalCoords: function(coord1, coord2) {
+          console.log(coord1);
           return getLatitude(coord1) === getLatitude(coord2) && getLongitude(coord1) === getLongitude(coord2);
         },
         validatePath: function(path) {
@@ -1497,6 +1502,7 @@ Nicholas McCready - https://twitter.com/nmccready
           if (hasCoords) {
             coord1 = this.scopeOrModelVal('coords', scope, model1);
             coord2 = this.scopeOrModelVal('coords', scope, model2);
+            console.log(coord1);
             isEqual = GmapUtil.equalCoords(coord1, coord2);
             if (!isEqual) {
               return isEqual;
