@@ -28,8 +28,6 @@
     };
     
     $scope.getData = function(cords){
-      console.log(cords);
-      var url = 'https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod?callback=JSON_CALLBACK';
       var url = 'https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod';
       $http({
         method: 'POST',
