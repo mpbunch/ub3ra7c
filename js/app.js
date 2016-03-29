@@ -110,9 +110,7 @@
     };
     
     $scope.updateMap = function(){
-      setTimeout(function(){
-        $scope.showem = $scope.filteredData;
-      },100);
+      $scope.showem = $scope.filteredData;
     };
     $scope.showem = [];    
 
