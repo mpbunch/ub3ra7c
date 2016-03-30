@@ -1,26 +1,47 @@
 ## Uber ATC full­stack developer homework
 
-Project Description:
+Project Description: Build Uber pickup and dropoff data visualization tool.
 
-## Code Example
+## What is under the hood
 
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
+angular, bower components, html/5, css/3
+ec2 [lamp], api gatway [passthrough]
 
-## Motivation
+## ..
 
-A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
+I wanted to help make (lat,lon) make sense. In order to do this I wanted to convert all (lat,lon) pairs to addresses.
+When viewing a map, you see street names, so you should be able to sort/filter your data based on what you see, street names.
+I used 10 google api keys to convert (lat,lon) pairs to address. (The job is still running)
 
-## Installatioin
+## Approach
 
-Provide code examples and explanations of how to get the project.
+I pivoted the dataset so that every other row became the previous rows drop off point.
+I added indexes to mysql for each column.
+I decided to upgrade my mysql version to 5.6 so I could use ST_CONTAINS() and increase speed.
+I deployed an API Gateway API that passes a payload through to a script on EC2.
+I wrote a PHP script to run and return queries.
+From there angular does all of the work.
 
-## API Reference
+## Improvements
 
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+Infrastructure: 
+Redshift would increase query speed.
+Caching smaller result sets and then filtering the cache would increase speed. (Maybe elistaCache)
+Converting the PHP script to Lambda Python would help decrease processing time.
 
-## Tests
-
-Describe and show how to run the tests with code examples.
+UI/UX:
+Add date range
+Add save filtered table option, csv, xlsx, pdf
+Add share this map option
+Add day of week filter
+Add time range filter
+Add pagination
+Add multicolumn search
+Add deeper insights:
+-Avg ride distance
+-Avg ride durration
+-Find frequent destinations
+-Find frequent pickup locations
 
 ## Contributors
 

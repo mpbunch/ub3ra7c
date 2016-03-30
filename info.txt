@@ -1,4 +1,4 @@
-vi uber-raw-data-may14.csv /dd first line
+remove first line from uber-raw-data-may14.csv
 sed --quiet -e 's/"//g' -e s/^/2014-/g' -e 's/\/2014//g' -e 's/\//-/g' apr.csv >> user.csv
 
 mysqlimport --fields-terminated-by=, --verbose --local -u root udb /var/www/html/uber-trip-data/user.csv
@@ -54,3 +54,23 @@ WHERE Contains(
     
     
     SELECT * FROM user WHERE Contains( GeomFromText( 'POLYGON(( 40.721469550114584 -74.00806903839111, 40.71652555020213 -73.98532390594482, 40.705497806690765 -74.00613784790039, 40.70943417253246 -74.01678085327148, 40.721469550114584 -74.00806903839111) )' ), PointFromText( CONCAT( 'POINT(',elat,' ',elon,' ',slat,' ',slon,')' ) ) ) && Contains( GeomFromText( 'POLYGON( ( 40.721469550114584 -74.00806903839111, 40.71652555020213 -73.98532390594482, 40.705497806690765 -74.00613784790039, 40.70943417253246 -74.01678085327148, 40.721469550114584 -74.00806903839111 ) )' ), PointFromText( CONCAT( 'POINT(',slat,' ',slon,')' ) ) ) && etime between '2014-04-10' and '2014-04-11';
+    
+    
+    
+    INSERT INTO `user` VALUES ('localhost','uatc','*2AB3FEDABD1913A13795C2171595AE28F595291','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'',NULL);
+    
+    
+    
+    
+    
+$sql = "SELECT *
+            FROM (
+                SELECT * 
+                FROM user
+                WHERE slat Between ".$minLat." And ".$maxLat."
+                  AND slon Between ".$minLon." And ".$maxLon."
+                  AND stime ".$date."
+            ) As FirstCut
+            WHERE ".$address." acos(sin(".deg2rad($lat).")*sin(radians(slat)) + cos(".deg2rad($lat).")*cos(radians(slat))*cos(radians(slon)-".deg2rad($lon).")) * ".$R." < ".$rad." 
+            AND acos(sin(".deg2rad($lat).")*sin(radians(elat)) + cos(".deg2rad($lat).")*cos(radians(elat))*cos(radians(elon)-".deg2rad($lon).")) * ".$R." < ".$rad." 
+            AND stime ".$date.";
