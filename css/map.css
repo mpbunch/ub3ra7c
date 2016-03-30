@@ -140,12 +140,6 @@ html, body {
 .angular-google-map img {
     max-width: inherit;
 }
-#map button.btn {
-  padding: 8px 10px;
-  font-size: 14px;
-  margin-top: 10px;
-  margin-right: 10px;
-  border-radius: 0px;
-  background-color: #999;
-  border: none;
+#map .btn-group {
+  margin:10px 10px 0 0;
 }

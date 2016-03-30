@@ -104,8 +104,9 @@
     };
 
     $scope.updateMap = function(){
-      $rootScope.showem = $scope.filteredData;
+      $rootScope.showem = $rootScope.filteredData;
     };
+    $rootScope.filteredData = [];
     $rootScope.showem = [];    
 
     function getDayClass(data) {

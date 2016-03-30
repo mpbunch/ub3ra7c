@@ -22,15 +22,17 @@
         <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
         <ui-gmap-window show="window.show" coords="window.coords" idkey="window.place_id" templateurl="window.templateurl" templateparameter="window.templateparameter" options="window.options" closeClick='window.closeClick()' ng-cloak></ui-gmap-window>
 
-        <ui-gmap-map-control template="circle.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
-        <ui-gmap-map-control template="draw.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
-        <ui-gmap-map-control template="clear.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
-        <ui-gmap-map-control template="heat.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
-        
+          <ui-gmap-map-control template="controls.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+<!--
+          <ui-gmap-map-control template="draw.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+          <ui-gmap-map-control template="clear.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+          <ui-gmap-map-control template="heat.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+-->
+            
         <ui-gmap-circle ng-repeat="c in map.circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius" events="c.events" visigble="c.visible" geodesic="c.geodesic" editable="c.editable" draggable="c.draggable" clickable="c.clickable"></ui-gmap-circle>
 
         <ui-gmap-polygon ng-repeat="p in map.polygons track by p.id" path="p.path" stroke="p.stroke" visible="p.visible" geodesic="p.geodesic" fill="p.fill" fit="false" editable="p.editable" draggable="p.draggable" events="map.polygonEvents"></ui-gmap-polygon>
-        <ui-gmap-markers models="showem" idKey="id" coords="'self'"  icon="'icon'" doCluster="true"></ui-gmap-markers>
+        <ui-gmap-markers models="$root.showem" idKey="id" coords="'self'"  icon="'icon'" doCluster="true"></ui-gmap-markers>
         <ui-gmap-layer namespace="visualization" type="HeatmapLayer"></ui-gmap-layer>
       </ui-gmap-google-map>
     </div>
