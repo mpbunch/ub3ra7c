@@ -23,14 +23,12 @@ I wanted to help make (lat,lon) make sense. When viewing a map, you see street n
 ## Improvements
 
 **Infrastructure:**
------
 * Redshift would increase query speed.
 * Caching smaller result sets and then filtering the cache would increase speed. (Maybe elistaCache)
 * Converting the PHP script to Lambda Python would help decrease processing time.
 
 
 **UI/UX:**
------
 * Add date range
 * Add save filtered table option, csv, xlsx, pdf
 * Add share this map option
