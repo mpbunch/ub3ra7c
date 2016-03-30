@@ -80,7 +80,7 @@
     }
     
     /* DATEPICKER */
-    $scope.dt = new Date(2014, 3, 1);                                     //default time for datepicker
+    $rootScope.dt = new Date(2014, 3, 1);                                 //default time for datepicker
     $scope.dateOptions = {                                                //datepicker options
       dateDisabled: false,
       formatYear: 'yy',

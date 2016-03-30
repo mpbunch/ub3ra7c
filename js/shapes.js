@@ -7,9 +7,9 @@
                        '<div class="btn-group" role="group" aria-label="...">'+
                           '<button type="button" class="btn btn-default" ng-click="drawWidget.controlClick()"><i class="fa fa-object-ungroup"></i></button>'+
                           '<button type="button" class="btn btn-default" ng-click="cricleWidget.controlClick()"><i class="fa fa-circle-thin"></i></button>'+
-                          '<button type="button" class="btn btn-default" ng-click="heatWidget.controlClick()" ng-if="$root.data"><i class="fa fa-fire"></i></button>'+
-                          '<button type="button" class="btn btn-default" ng-click="markerWidget.controlClick()" ng-if="$root.data"><i class="fa fa-map-marker"></i></button>'+
-                          '<button type="button" class="btn btn-default" ng-click="clearWidget.controlClick()" ng-if="$root.data"><i class="fa fa-trash-o"></i></button>'+
+                          '<button type="button" class="btn btn-default" ng-click="heatWidget.controlClick()" ng-if="$root.data.length > 0"><i class="fa fa-fire"></i></button>'+
+                          '<button type="button" class="btn btn-default" ng-click="markerWidget.controlClick()" ng-if="$root.data.length > 0"><i class="fa fa-map-marker"></i></button>'+
+                          '<button type="button" class="btn btn-default" ng-click="clearWidget.controlClick()" ng-if="$root.data.length > 0"><i class="fa fa-trash-o"></i></button>'+
                        '</div>'
                        );
   }])
@@ -102,10 +102,12 @@
     $scope.clearWidget = {                                              //clear option settings
       controlClick: function () {
         $rootScope.check.bounds = false;
+        $rootScope.check.add = false;
         $rootScope.map.circles = [];
         $rootScope.map.polygons = [];
         $rootScope.map.markers = [];
         $rootScope.data = [];
+        $rootScope.dt = new Date(2014, 3, 1);
         $rootScope.showem = [];
         if($rootScope.heatmap){
           $rootScope.heatmap.setMap(null);

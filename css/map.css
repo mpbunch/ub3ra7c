@@ -143,3 +143,23 @@ html, body {
 #map .btn-group {
   margin:10px 10px 0 0;
 }
+#pac-input{
+  margin-left:-2px;
+}
+@media screen and (max-width:565px){
+  #pac-input{
+    width:300px;
+  }
+}
+@media screen and (max-width:450px){
+  #pac-input{
+    width:250px;
+  }
+}
+@media screen and (max-width: 1200px){
+  #map .btn-group {
+    margin-top: 46px;
+    position: relative !important;
+    margin-left: 10px;
+  }
+}

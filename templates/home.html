@@ -8,8 +8,10 @@
  <div class="container">
   <div class="row region" ng-controller="mapSearchCtrlr">
     <div class="col-xs-12 col-sm-9 margin-bottom-20">
-      <div id="searchBoxParent"></div>
-        <ui-gmap-google-map id="map"
+      <h4>Map | Data Visualization</h4>
+      <p>Polygon and circle filter options make finding just the right dataset that much easier.</p>
+      <p class="margin-bottom-20">Once you have run a search, you can toggle the heatmap and markers.</p>
+      <ui-gmap-google-map id="map"
            center="map.center"
            pan="map.pan"
            zoom="map.zoom"
@@ -37,6 +39,8 @@
       </ui-gmap-google-map>
     </div>
     <div class="col-xs-12 col-sm-3">
+      <h4>Search Parameters</h4>
+      <p class="margin-bottom-20">Dont forget to use the polygon or circle geofence selector on the map.</p>
       <label>Date</label>
       <p class="input-group">
         <input type="text" class="form-control" uib-datepicker-popup ng-model="$parent.dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" show-button-bar="false"/>
