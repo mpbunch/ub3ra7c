@@ -4,8 +4,8 @@ Project Description: Build Uber pickup and dropoff data visualization tool.
 
 ## What is under the hood
 
-* angular, bower components, html/5, css/3
-* ec2 [lamp], api gateway [passthrough]
+* AngularJS, Bower Components, HTML/5, CSS/3
+* EC2 [LAMP], API Gateway [HTTP Proxy]
 
 ## Basic Idea
 
@@ -13,11 +13,11 @@ I wanted to help make (lat,lon) make sense. When viewing a map, you see street n
 
 ## Technical Approach
 
-* I pivoted the dataset so that every other row became the previous rows drop off point.
-* I added indexes to mysql for each column.
-* I decided to upgrade my mysql version to 5.6 so I could use ST_CONTAINS() and increase speed.
-* I deployed an API Gateway API that passes a payload through to a script on EC2.
-* I wrote a PHP script to run and return queries.
+* Pivoted the dataset so that every other row became the previous rows drop off point.
+* Added indexes to mysql for each column.
+* Decided to upgrade my mysql version to 5.6 so I could use ST_CONTAINS() and increase speed.
+* Deployed an API Gateway API that passes a payload through to a script on EC2.
+* Wrote a PHP script to run and return queries.
 * From there angular does all of the work.
 
 ## Improvements
