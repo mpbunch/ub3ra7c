@@ -12,7 +12,8 @@
   }])
   .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser','$rootScope','$filter', function($scope, $timeout, $log, $http, GoogleMapApi,uibDateParser,$rootScope,$filter){
     $scope.check = {
-      box:true
+      geo:true,
+      add:false
     };
     $scope.runQuery = function(){                                         //on submit button click
       if($scope.map.polygons[0]){                                         //validate polygon is being used
@@ -22,46 +23,35 @@
           c += poly.path[i].latitude+' '+poly.path[i].longitude+',';      //save to string
         }
         c += poly.path[0].latitude+' '+poly.path[0].longitude;            //add first element to end of string to close polygon
-        $scope.getData(c,$scope.check.box);                                            //get data based on the polygon bounds
+        $scope.getData('poly',c,$scope.check,$scope.dt);                         //get data based on the polygon bounds
       }
       if($scope.map.circles[0]){                                          //validate circle is being used
         var circ = $rootScope.map.circles[0];                             
-        console.log(circ.center,circ.radius);                             
+        var c = {lat:circ.center.latitude,lon:circ.center.longitude,rad:circ.radius};
+        $scope.getData('circle',c,$scope.check,$scope.dt);                             
       }
     };
-    
-    $scope.getData = function(cords,check){
-      var payload = [{c:cords,b:check}];
+    $scope.noresult = true;
+    $scope.getData = function(type,cords,check,date){
+      var payload = [{a:type,c:cords,b:check.geo,d:check.add,e:date}];
+      console.log(payload[0]);
       var url = 'https://hj4b3xg0bg.execute-api.us-west-2.amazonaws.com/prod';
       $http({
         method: 'POST',
         url: url,
         data: payload
-      }).then(function successCallback(response) {
-        $scope.data = response.data;
-        $scope.map.markers = response.data;
-        $scope.showem = response.data;
+      }).then(function successCallback(response){
+        if(response.data){
+          $scope.data = response.data;
+          $scope.map.markers = response.data;
+          $scope.showem = response.data;
+          return;
+        }
+        $scope.noresult = false;
       });
     };
-
-    
-    
-    
-    $scope.today = function() {
-      $scope.dt = new Date(2014, 3, 1);
-    };
-    $scope.today();
-
-    $scope.clear = function() {
-      $scope.dt = '2014-04-01';
-    };
-
-    $scope.inlineOptions = {
-      customClass: getDayClass,
-      minDate: new Date(2014, 3, 1),
-      showWeeks: false
-    };
-
+    $scope.dt = new Date(2014, 3, 1);
+        
     $scope.dateOptions = {
       dateDisabled: false,
       formatYear: 'yy',
@@ -71,44 +61,18 @@
       showWeeks:false
     };
 
-    // Disable weekend selection
-    function disabled(data) {
-      var date = data.date,
-        mode = data.mode;
-      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-    }
-
-    $scope.toggleMin = function() {
-      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-    };
-
-    $scope.toggleMin();
-
     $scope.open1 = function() {
       $scope.popup1.opened = true;
-    };
-
-    $scope.open2 = function() {
-      $scope.popup2.opened = true;
     };
 
     $scope.setDate = function(year, month, day) {
       $scope.dt = new Date(year, month, day);
     };
 
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-    $scope.altInputFormats = ['M!/d!/yyyy'];
-
     $scope.popup1 = {
       opened: false
     };
 
-    $scope.popup2 = {
-      opened: false
-    };
-    
     $scope.updateMap = function(){
       $scope.showem = $scope.filteredData;
     };
@@ -157,7 +121,9 @@
       bounds:{},
       markers:[],
       idkey: 'place_id',
-      bounds: {}      
+      bounds: {},
+      circles:[],
+      polygons:[]
     };
   }])
   .controller('projectController',[function(){}])
