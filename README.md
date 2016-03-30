@@ -4,8 +4,8 @@ Project Description: Build Uber pickup and dropoff data visualization tool.
 
 ## What is under the hood
 
-angular, bower components, html/5, css/3
-ec2 [lamp], api gatway [passthrough]
+*angular, bower components, html/5, css/3
+*ec2 [lamp], api gatway [passthrough]
 
 ## Basic Idea
 
@@ -13,7 +13,7 @@ I wanted to help make (lat,lon) make sense. When viewing a map, you see street n
 
 ## Approach
 
-Markup : *I pivoted the dataset so that every other row became the previous rows drop off point.
+*I pivoted the dataset so that every other row became the previous rows drop off point.
 *I added indexes to mysql for each column.
 *I decided to upgrade my mysql version to 5.6 so I could use ST_CONTAINS() and increase speed.
 *I deployed an API Gateway API that passes a payload through to a script on EC2.
@@ -22,12 +22,12 @@ Markup : *I pivoted the dataset so that every other row became the previous rows
 
 ## Improvements
 
-Markup : * **Infrastructure:**
+* **Infrastructure:**
 *Redshift would increase query speed.
 *Caching smaller result sets and then filtering the cache would increase speed. (Maybe elistaCache)
 *Converting the PHP script to Lambda Python would help decrease processing time.
 
-Markup : * **UI/UX:**
+* **UI/UX:**
 *Add date range
 *Add save filtered table option, csv, xlsx, pdf
 *Add share this map option
