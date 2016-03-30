@@ -9,8 +9,8 @@
     });
   }])
   .run(['$templateCache', function ($templateCache) {
-    $templateCache.put('searchbox.tpl.html', '<input id="pac-input" class="pac-controls" type="text" placeholder="Search">');
-    $templateCache.put('window.tpl.html', '<div ng-controller="WindowCtrl" ng-init="showPlaceDetails(parameter)">{{place.name}}</div>');
+    $templateCache.put('searchbox.tpl.html', '<input id="pac-input" class="pac-controls" type="text" placeholder="Search">');             //searchbox 
+    $templateCache.put('window.tpl.html', '<div ng-controller="WindowCtrl" ng-init="showPlaceDetails(parameter)">{{place.name}}</div>');  //search resultset
   }])
   .controller('WindowCtrl', function ($scope) {
     $scope.place = {};
@@ -18,11 +18,10 @@
       $scope.place = param;
     }
   })
-  .controller("mapSearchCtrlr",['$scope', '$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi', function ($scope, $timeout, $log, $http, GoogleMapApi) {
-    $log.doLog = true;
+  .controller("mapSearchCtrlr",['$scope', '$timeout', '$http','uiGmapGoogleMapApi', function ($scope, $timeout, $http, GoogleMapApi) {
     GoogleMapApi.then(function(maps){
       maps.visualRefresh = true;
-      $scope.defaultBounds = new google.maps.LatLngBounds(
+      $scope.defaultBounds = new google.maps.LatLngBounds(                  //default map bounds
         new google.maps.LatLng(40.82148, -73.66450),
         new google.maps.LatLng(40.66541, -74.31715));
 
@@ -37,9 +36,9 @@
 
         }
       }
-      $scope.searchbox.options.bounds = new google.maps.LatLngBounds($scope.defaultBounds.getNorthEast(), $scope.defaultBounds.getSouthWest());
+      $scope.searchbox.options.bounds = new google.maps.LatLngBounds($scope.defaultBounds.getNorthEast(), $scope.defaultBounds.getSouthWest()); //resenter map
     });
-    angular.extend($scope,{
+    angular.extend($scope,{                                                //extend
       window:{
         show: false,
         templateurl:'window.tpl.html',
@@ -58,7 +57,7 @@
           place_changed: function(autocomplete){            
             var place = autocomplete.getPlace();
             if(place.address_components){
-              var newMarkers = [];
+//              var newMarkers = [];
               var bounds = new google.maps.LatLngBounds();
 //              var marker = {                                    // We dont really need to put the marker of the searched location on the map.. 
 //                idKey:place.place_id,
@@ -92,9 +91,7 @@
                   longitude: bounds.getSouthWest().lng()
                 }
               }
-              $scope.map.markers = newMarkers;
-            }else{
-              console.log("do something else with the search string: " + place.name);
+//              $scope.map.markers = newMarkers;
             }
           }
         }

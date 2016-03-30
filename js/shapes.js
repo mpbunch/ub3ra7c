@@ -1,16 +1,29 @@
 (function (window, ng) {
   'use strict';
   ng.module('mapPoly', ['uiGmapgoogle-maps'])
+  .run(['$templateCache', function ($templateCache) {
+    //map selection options
+    $templateCache.put('controls.tpl.html',
+                       '<div class="btn-group" role="group" aria-label="...">'+
+                          '<button type="button" class="btn btn-default" ng-click="drawWidget.controlClick()"><i class="fa fa-object-ungroup"></i></button>'+
+                          '<button type="button" class="btn btn-default" ng-click="cricleWidget.controlClick()"><i class="fa fa-circle-thin"></i></button>'+
+                          '<button type="button" class="btn btn-default" ng-click="heatWidget.controlClick()" ng-if="$root.data"><i class="fa fa-fire"></i></button>'+
+                          '<button type="button" class="btn btn-default" ng-click="markerWidget.controlClick()" ng-if="$root.data"><i class="fa fa-map-marker"></i></button>'+
+                          '<button type="button" class="btn btn-default" ng-click="clearWidget.controlClick()" ng-if="$root.data"><i class="fa fa-trash-o"></i></button>'+
+                       '</div>'
+                       );
+  }])
   .controller('mapWidgetCtrl', ['$scope','$rootScope', function ($scope,$rootScope) {
-    $scope.drawWidget = {
+    /* POLYGON */
+    $scope.drawWidget = {                                               //circle settings
       controlText: 'poly',
       controlClick: function () {
-        if($rootScope.map.polygons.length > 0){
+        if($rootScope.map.polygons.length > 0){                         //remove polygon
           $rootScope.map.polygons = [];
         }else{
           $rootScope.check.bounds = false;
           $rootScope.map.circles = [];
-          $rootScope.map.polygons = [{
+          $rootScope.map.polygons = [{                                  //polygon template, this should be tweked to center to screen
             id: 1,
             center: {
               latitude: $rootScope.map.center.latitude,
@@ -47,7 +60,10 @@
         }
       }
     };
-    $scope.cricleWidget = {
+    /* *** */
+    
+    /* CIRCLE */
+    $scope.cricleWidget = {                                               //circle settings
       controlText: 'circle',
       controlClick: function (){
         if($rootScope.map.circles.length > 0){
@@ -81,7 +97,9 @@
         }
       }
     };
-    $scope.clearWidget = {
+    
+    /* CLEAR | Basically a seset form */
+    $scope.clearWidget = {                                              //clear option settings
       controlClick: function () {
         $rootScope.check.bounds = false;
         $rootScope.map.circles = [];
@@ -94,42 +112,23 @@
         }
       }
     };
+    /* *** */
+    
+    /* TOGGLE MARKERS */
     $scope.markerWidget = {
       controlClick: function (){
         $rootScope.showem.length > 0 ? $rootScope.showem = [] : $rootScope.showem = $rootScope.map.markers;
         console.log($rootScope.showem);
       }
     }
+    /* *** */
+    
+    /* TOGGLE HEAT */
     $scope.heatWidget = {
       controlClick: function () {
         $rootScope.heatmap.setMap($rootScope.heatmap.getMap() ? null : $rootScope.map.control.getGMap());
       }
     };
-  }])
-  .controller('mapPolyCtrlr', [function () {
-    
-  }])
-  .run(['$templateCache','uiGmapLogger', function ($templateCache,Logger) {
-    Logger.doLog = true;
-//    $templateCache.put('draw.tpl.html',   '<button type="button" class="btn btn-primary" ng-click="drawWidget.controlClick()">{{drawWidget.controlText}}</button>');
-//    $templateCache.put('clear.tpl.html',  '<button type="button" class="btn btn-primary" ng-click="clearWidget.controlClick()">{{clearWidget.controlText}}</button>');
-//    $templateCache.put('circle.tpl.html', '');
-    $templateCache.put('controls.tpl.html',
-                       '<div class="btn-group" role="group" aria-label="...">'+
-                          '<button type="button" class="btn btn-default" ng-click="drawWidget.controlClick()"><i class="fa fa-object-ungroup"></i></button>'+
-                          '<button type="button" class="btn btn-default" ng-click="cricleWidget.controlClick()"><i class="fa fa-circle-thin"></i></button>'+
-                          '<button type="button" class="btn btn-default" ng-click="heatWidget.controlClick()" ng-if="$root.data"><i class="fa fa-fire"></i></button>'+
-                          '<button type="button" class="btn btn-default" ng-click="markerWidget.controlClick()" ng-if="$root.data"><i class="fa fa-map-marker"></i></button>'+
-                          '<button type="button" class="btn btn-default" ng-click="clearWidget.controlClick()" ng-if="$root.data"><i class="fa fa-trash-o"></i></button>'+
-                       '</div>'
-                       );
+    /* *** */
   }]);
 })(window, angular);
-
-
-
-//<div class="btn-group" role="group" aria-label="...">
-//  <button type="button" class="btn btn-default">Left</button>
-//  <button type="button" class="btn btn-default">Middle</button>
-//  <button type="button" class="btn btn-default">Right</button>
-//</div>
