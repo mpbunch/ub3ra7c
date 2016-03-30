@@ -21,34 +21,40 @@
     $scope.drawWidget = {
       controlText: 'poly',
       controlClick: function () {
+        $rootScope.check.bounds = false;
         $rootScope.map.circles = [];
         $rootScope.map.polygons = [{
           id: 1,
+          center: {
+            latitude: $rootScope.map.center.latitude,
+            longitude: $rootScope.map.center.longitude
+          },
           path: [
             {
               latitude: 40.76,
-            longitude: -73.999
+              longitude: -73.999
             },
             {
               latitude: 40.71,
-            longitude: -74.012
+              longitude: -74.012
             },
             {
               latitude: 40.749,
-            longitude: -73.970
+              longitude: -73.970
             }
           ],
           stroke: {
             color: '#33CDDC',
-            weight: 3
+            weight: 2,
+            opacity:.8
           },
           editable: true,
           draggable: true,
-          geodesic: false,
+          geodesic: true,
           visible: true,
           fill: {
             color: '#33CCCC',
-            opacity: 0.8
+            opacity: 0.2
           }
         }];
       }
@@ -56,23 +62,24 @@
     $scope.cricleWidget = {
       controlText: 'circle',
       controlClick: function (){
+        $rootScope.check.bounds = false;
         $rootScope.map.polygons = [];
         $rootScope.map.circles = [
           {
             id: 1,
             center: {
-              latitude: 40.74349,
-              longitude: -73.990822
+              latitude: $rootScope.map.center.latitude,
+              longitude: $rootScope.map.center.longitude
             },
             radius: 1500,
             stroke: {
               color: '#08B21F',
               weight: 2,
-              opacity: 1
+              opacity: .8
             },
             fill: {
               color: '#08B21F',
-              opacity: 0.5
+              opacity: 0.2
             },
             geodesic: true,
             draggable: true,
@@ -85,8 +92,12 @@
     $scope.clearWidget = {
       controlText: 'clear',
       controlClick: function () {
+        $rootScope.check.bounds = false;
         $rootScope.map.circles = [];
         $rootScope.map.polygons = [];
+        $rootScope.map.markers = [];
+        $rootScope.data = [];
+        $rootScope.showem = [];
       }
     };
   }])
