@@ -27,6 +27,7 @@ I wanted to help make (lat,lon) make sense. When viewing a map, you see street n
 * Caching smaller result sets and then filtering the cache would increase speed. (Maybe elistaCache)
 * Converting the PHP script to Lambda Python would help decrease processing time.
 
+
 * **UI/UX:**
 * Add date range
 * Add save filtered table option, csv, xlsx, pdf
