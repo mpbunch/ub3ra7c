@@ -11,7 +11,7 @@ Project Description: Build Uber pickup and dropoff data visualization tool.
 
 I wanted to help make (lat,lon) make sense. When viewing a map, you see street names, so you should be able to sort/filter your data based on what you see, street names.
 
-## Approach
+## Technical Approach
 
 * I pivoted the dataset so that every other row became the previous rows drop off point.
 * I added indexes to mysql for each column.
