@@ -5,9 +5,6 @@
     $routeProvider.when('/',{
       templateUrl:'templates/home.html',
       controller:'mainController'
-    }).when('/project',{
-      templateUrl:'templates/project.html',
-      controller:'projectController'
     });   
   }])
   .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser','$rootScope','$filter', function($scope, $timeout, $log, $http, uiGmapGoogleMapApi, uibDateParser, $rootScope, $filter){
