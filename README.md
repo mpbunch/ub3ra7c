@@ -5,7 +5,7 @@ Project Description: Build Uber pickup and dropoff data visualization tool.
 ## What is under the hood
 
 * angular, bower components, html/5, css/3
-* ec2 [lamp], api gatway [passthrough]
+* ec2 [lamp], api gateway [passthrough]
 
 ## Basic Idea
 
