@@ -101,10 +101,9 @@
     /* *** */
     
     /* TABLE FILTER */
-    $rootScope.filteredData = [];
     $rootScope.showem       = [];
     $scope.updateMap = function(){                                        //on filter update markers on map
-      $rootScope.showem = $rootScope.filteredData;
+      $rootScope.showem = $scope.filteredData;
     };
       
     $scope.sortType     = 'stime';                                        // set the default sort type
