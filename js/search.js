@@ -60,27 +60,27 @@
             if(place.address_components){
               var newMarkers = [];
               var bounds = new google.maps.LatLngBounds();
-              var marker = {
-                idKey:place.place_id,
-                place_id: place.place_id,
-                name: place.address_components[0].long_name,
-                latitude: place.geometry.location.lat(),
-                longitude: place.geometry.location.lng(),
-                templateurl:'window.tpl.html',
-                templateparameter: place,
-                events:{
-                  click: function(marker){
-                    $scope.window.coords = {
-                      latitude: marker.model.latitude,
-                      longitude: marker.model.longitude
-                    }
-                    $scope.window.templateparameter = marker.model.templateparameter;
-                    $scope.window.show = true;
-
-                  }
-                }
-              };
-              newMarkers.push(marker);
+//              var marker = {                                    // We dont really need to put the marker of the searched location on the map.. 
+//                idKey:place.place_id,
+//                place_id: place.place_id,
+//                name: place.address_components[0].long_name,
+//                latitude: place.geometry.location.lat(),
+//                longitude: place.geometry.location.lng(),
+//                templateurl:'window.tpl.html',
+//                templateparameter: place,
+//                events:{
+//                  click: function(marker){
+//                    $scope.window.coords = {
+//                      latitude: marker.model.latitude,
+//                      longitude: marker.model.longitude
+//                    }
+//                    $scope.window.templateparameter = marker.model.templateparameter;
+//                    $scope.window.show = true;
+//
+//                  }
+//                }
+//              };
+//              newMarkers.push(marker);
               bounds.extend(place.geometry.location);
               $scope.map.bounds = {
                 northeast:{

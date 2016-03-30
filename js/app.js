@@ -10,7 +10,7 @@
       controller:'projectController'
     });   
   }])
-  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapIsReady','uibDateParser','$rootScope','$filter', function($scope, $timeout, $log, $http, uiGmapIsReady, uibDateParser, $rootScope, $filter){
+  .controller('mainController',['$scope','$timeout', 'uiGmapLogger', '$http','uiGmapGoogleMapApi','uibDateParser','$rootScope','$filter', function($scope, $timeout, $log, $http, uiGmapGoogleMapApi, uibDateParser, $rootScope, $filter){
     $rootScope.check = {
       geo:true,
       add:false,
@@ -57,13 +57,31 @@
           $rootScope.data = response.data;
           $scope.map.markers = response.data;
           $rootScope.showem = response.data;
+          $rootScope.map.heatLayerCallback();
           return;
         }
         $scope.noresult = false;
       });
     };
+    
+      
+    function MockHeatLayer(heatLayer){      
+      var map, pointarray, heatmap;
+      $scope.uberPickup = [];
+      $scope.uberDropoff = [];
+      if($rootScope.heatmap){
+        $rootScope.heatmap.setMap(null);
+      }
+      for(var i=0;i<$scope.showem.length;++i){
+        $scope.uberPickup.push(new google.maps.LatLng($scope.showem[i].latitude,$scope.showem[i].longitude));
+        $scope.uberDropoff.push(new google.maps.LatLng($scope.showem[i].dlatitude,$scope.showem[i].dlongitude));
+      }
+      $rootScope.heatmap = new google.maps.visualization.HeatmapLayer({
+        data: $scope.uberPickup
+      });
+    }
     $scope.dt = new Date(2014, 3, 1);
-        
+    
     $scope.dateOptions = {
       dateDisabled: false,
       formatYear: 'yy',
@@ -95,16 +113,13 @@
         mode = data.mode;
       if (mode === 'day') {
         var dayToCheck = new Date(date).setHours(0,0,0,0);
-
         for (var i = 0; i < $scope.events.length; i++) {
           var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
           if (dayToCheck === currentDay) {
             return $scope.events[i].status;
           }
         }
       }
-
       return '';
     }
     
@@ -113,7 +128,12 @@
     $scope.searchData   = '';     // set the default search/filter term
     $scope.clearShapes = function(){
       $rootScope.map.circles = [];
-      $rootScope.map.polygons = [];
+      $rootScope.map.polygons = 
+      $rootScope.showem = [];
+      $rootScope.data = [];
+      if($rootScope.heatmap){
+        $rootScope.heatmap.setMap(null);
+      }
     }
     $rootScope.map = {
       control:{},
@@ -124,22 +144,33 @@
       pan: true,
       zoom: 12,
       refresh: false,
-      options: {
-        disableDefaultUI: true
-      },
       polys: [],
-      draw: undefined,
-      options: {
-        disableDefaultUI: true
-      },
       dragging: false,
       bounds:{},
       markers:[],
-      idkey: 'place_id',
       bounds: {},
       circles:[],
-      polygons:[]
+      polygons:[],
+      heatLayerCallback:function(layer){        
+        var mockHeatLayer = new MockHeatLayer(layer);
+      }
     };
+//    $scope.showDirections = function(t){                                        //started to do wayfinding, where did all the time go?
+//      console.log(t.latitude,t.longitude,t.dlatitude,t.dlongitude);
+//    
+//      uiGmapGoogleMapApi.then(function(maps){
+//        var directionsService = new maps.DirectionsService();
+//        var request = {
+//          origin: new maps.LatLng(t.latitude,t.longitude),
+//          destination: new maps.LatLng(t.dlatitude,t.longitudeng),
+//          travelMode: maps.TravelMode['DRIVING'],
+//          optimizeWaypoints: true
+//        };
+//        directionsService.route(request, function(response, status) {
+//          console.log(response);
+//        });
+//      });
+//    }
   }])
   .controller('projectController',[function(){}])
 })();

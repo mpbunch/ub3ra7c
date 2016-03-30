@@ -1,26 +1,13 @@
 (function (window, ng) {
   'use strict';
   ng.module('mapPoly', ['uiGmapgoogle-maps'])
-  .factory('channel', function(){
-    return function () {
-      var callbacks = [];
-      this.add = function (cb) {
-        callbacks.push(cb);
-      };
-      this.invoke = function () {
-        callbacks.forEach(function (cb) {
-          cb();
-        });
-      };
-      return this;
-    };
-  })
-
   .controller('mapWidgetCtrl', ['$scope','$rootScope', function ($scope,$rootScope) {
-    
     $scope.drawWidget = {
       controlText: 'poly',
       controlClick: function () {
+        if($rootScope.heatmap){
+          $rootScope.heatmap.setMap(null);
+        }
         $rootScope.check.bounds = false;
         $rootScope.map.circles = [];
         $rootScope.map.polygons = [{
@@ -62,6 +49,9 @@
     $scope.cricleWidget = {
       controlText: 'circle',
       controlClick: function (){
+        if($rootScope.heatmap){
+          $rootScope.heatmap.setMap(null);
+        }
         $rootScope.check.bounds = false;
         $rootScope.map.polygons = [];
         $rootScope.map.circles = [
@@ -100,14 +90,21 @@
         $rootScope.showem = [];
       }
     };
+    $scope.heatWidget = {
+      controlText: 'heat',
+      controlClick: function () {
+        $rootScope.heatmap.setMap($rootScope.heatmap.getMap() ? null : $rootScope.map.control.getGMap());
+      }
+    };
   }])
   .controller('mapPolyCtrlr', [function () {
     
   }])
   .run(['$templateCache','uiGmapLogger', function ($templateCache,Logger) {
     Logger.doLog = true;
-    $templateCache.put('draw.tpl.html', '<button class="btn btn-lg btn-primary"  ng-click="drawWidget.controlClick()">{{drawWidget.controlText}}</button>');
-    $templateCache.put('clear.tpl.html', '<button class="btn btn-lg btn-primary"  ng-click="clearWidget.controlClick()">{{clearWidget.controlText}}</button>');
-    $templateCache.put('circle.tpl.html', '<button class="btn btn-lg btn-primary"  ng-click="cricleWidget.controlClick()">{{cricleWidget.controlText}}</button>')
+    $templateCache.put('draw.tpl.html', '<button class="btn btn-lg btn-primary" ng-click="drawWidget.controlClick()">{{drawWidget.controlText}}</button>');
+    $templateCache.put('clear.tpl.html', '<button class="btn btn-lg btn-primary" ng-click="clearWidget.controlClick()">{{clearWidget.controlText}}</button>');
+    $templateCache.put('circle.tpl.html', '<button class="btn btn-lg btn-primary" ng-click="cricleWidget.controlClick()">{{cricleWidget.controlText}}</button>');
+    $templateCache.put('heat.tpl.html', '<button class="btn btn-lg btn-primary" ng-click="heatWidget.controlClick()">{{heatWidget.controlText}}</button>');
   }]);
 })(window, angular);

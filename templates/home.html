@@ -7,7 +7,7 @@
 </div>
  <div class="container">
   <div class="row region" ng-controller="mapSearchCtrlr">
-    <div class="col-xs-12 col-sm-9" ng-controller="mapPolyCtrlr">
+    <div class="col-xs-12 col-sm-9 margin-bottom-20" ng-controller="mapPolyCtrlr">
       <div id="searchBoxParent"></div>
         <ui-gmap-google-map id="map"
            center="map.center"
@@ -19,29 +19,20 @@
            events="map.events"
            bounds="map.bounds"
            control="map.control">
-            <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
-            <!--to add to a parent div-->
-            <!--<ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" parentdiv="searchbox.parentdiv"></ui-gmap-search-box>-->
-<!--            <ui-gmap-markers idkey="map.idkey" models="map.markers" coords="'self'" icon="'icon'" click="'onClicked'"></ui-gmap-markers>-->
-            <ui-gmap-window show="window.show" coords="window.coords" idkey="window.place_id" templateurl="window.templateurl" templateparameter="window.templateparameter" options="window.options" closeClick='window.closeClick()' ng-cloak>
-            </ui-gmap-window>
-            
-            <ui-gmap-map-control template="circle.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
-            <ui-gmap-map-control template="draw.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
-            <ui-gmap-map-control template="clear.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+        <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
+        <ui-gmap-window show="window.show" coords="window.coords" idkey="window.place_id" templateurl="window.templateurl" templateparameter="window.templateparameter" options="window.options" closeClick='window.closeClick()' ng-cloak></ui-gmap-window>
 
-<!--            <ui-gmap-free-draw-polygons polygons="map.polys" draw="map.draw" ></ui-gmap-free-draw-polygons>-->
-            <ui-gmap-circle ng-repeat="c in map.circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius"
-                events="c.events" visigble="c.visible" geodesic="c.geodesic"
-                editable="c.editable" draggable="c.draggable" clickable="c.clickable">
-            </ui-gmap-circle>
-            
-            <ui-gmap-polygon ng-repeat="p in map.polygons track by p.id" path="p.path" stroke="p.stroke" visible="p.visible"
-                geodesic="p.geodesic" fill="p.fill" fit="false" editable="p.editable" draggable="p.draggable" events="map.polygonEvents">
-            </ui-gmap-polygon>
-            <ui-gmap-markers models="showem" idKey="id" coords="'self'"  icon="'icon'" doCluster="true"></ui-gmap-markers>
+        <ui-gmap-map-control template="circle.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+        <ui-gmap-map-control template="draw.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+        <ui-gmap-map-control template="clear.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+        <ui-gmap-map-control template="heat.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+        
+        <ui-gmap-circle ng-repeat="c in map.circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius" events="c.events" visigble="c.visible" geodesic="c.geodesic" editable="c.editable" draggable="c.draggable" clickable="c.clickable"></ui-gmap-circle>
 
-        </ui-gmap-google-map>
+        <ui-gmap-polygon ng-repeat="p in map.polygons track by p.id" path="p.path" stroke="p.stroke" visible="p.visible" geodesic="p.geodesic" fill="p.fill" fit="false" editable="p.editable" draggable="p.draggable" events="map.polygonEvents"></ui-gmap-polygon>
+        <ui-gmap-markers models="showem" idKey="id" coords="'self'"  icon="'icon'" doCluster="true"></ui-gmap-markers>
+        <ui-gmap-layer namespace="visualization" type="HeatmapLayer"></ui-gmap-layer>
+      </ui-gmap-google-map>
     </div>
     <div class="col-xs-12 col-sm-3">
       <label>Date</label>
@@ -76,7 +67,7 @@
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Search date or location" ng-model="searchData" ng-keyup="updateMap()">
+            <input type="text" class="form-control" placeholder="All columns are searchable" ng-model="searchData" ng-keyup="updateMap()">
           </div>      
         </div>
       </form>
@@ -136,7 +127,7 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat="trip in ($parent.filteredData = (data | orderBy:sortType:sortReverse | filter:searchData))">
+          <tr ng-repeat="trip in ($parent.filteredData = (data | orderBy:sortType:sortReverse | filter:searchData))"><!--ng-click="showDirections(trip)"-->
             <td>{{trip.ptime}}</td>
             <td ng-if="check.add">{{trip.address}}</td>
             <td ng-if="!check.add">{{trip.latitude}}</td>
