@@ -21,7 +21,7 @@ I wanted to help make (lat,lon) make sense. When viewing a map, you see street n
 * From there angular does all of the work.
 ## Design Decisions
 
-**Infrastructure: **
+**Infrastructure:**
 * EC2 was an easy choice, I use it frequently at work and on side projects.
 * API Gateway was also a quick win, super easy to get up and running
 * Database: 
@@ -41,7 +41,7 @@ I wanted to help make (lat,lon) make sense. When viewing a map, you see street n
 
 ## Improvements
 
-**Infrastructure: **
+**Infrastructure:**
 * Redshift would increase query speed.
 * Caching smaller result sets and then filtering the cache would increase speed. (Maybe ElistaCache)
 * Converting the PHP script to Lambda Python would help decrease processing time.
