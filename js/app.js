@@ -50,7 +50,8 @@
         url: url,
         data: payload
       }).then(function successCallback(response){
-        if(response.data){                                                //validate response has data
+        if(response.data.length > 0){                                     //validate response has data
+          $scope.noresult = true;                                         //it seems backwards in the controller, but in the template it seems correct. idk
           $rootScope.data = response.data;                                //keep master
           $scope.map.markers = response.data;                             //prepare markers
           $rootScope.showem = response.data;                              //perpare filterable markers

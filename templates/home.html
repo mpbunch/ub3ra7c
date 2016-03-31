@@ -55,7 +55,7 @@
       <input type="checkbox" ng-model="check.bounds" ng-click="clearShapes()"/> Query map window.
       <input type="submit" value="Search" class="form-control btn btn-primary margin-top-30" ng-click="runQuery()" ng-disabled="map.circles.length === 0 && map.polygons.length === 0 && !check.bounds"/>
       <p class="text-center font-size-10">Geofence Required, or check the query map window box.</p>
-      <div class="alert alert-danger text-center" role="alert" ng-if="!noresult">
+      <div class="alert alert-danger text-center margin-top-20" role="alert" ng-if="!noresult">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <span class="sr-only">Error:</span>
         No Results Found
